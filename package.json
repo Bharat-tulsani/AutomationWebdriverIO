@@ -1,0 +1,38 @@
+{
+  "name": "automationwebdriverio",
+  "version": "1.0.0",
+  "description": "This is for e2e testing",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wdio": "wdio run ./wdio.conf.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TulsaniB/AutomationWebdriverIO.git"
+  },
+  "keywords": [
+    "wdio",
+    "cucumber",
+    "e2e",
+    "testing"
+  ],
+  "author": "Bharat Tulsani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TulsaniB/AutomationWebdriverIO/issues"
+  },
+  "homepage": "https://github.com/TulsaniB/AutomationWebdriverIO#readme",
+  "devDependencies": {
+    "@types/chai": "^4.3.14",
+    "@wdio/allure-reporter": "^8.34.0",
+    "@wdio/cli": "^8.35.1",
+    "@wdio/cucumber-framework": "^8.35.0",
+    "@wdio/local-runner": "^8.35.1",
+    "@wdio/spec-reporter": "^8.32.4",
+    "chai": "^5.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  }
+}

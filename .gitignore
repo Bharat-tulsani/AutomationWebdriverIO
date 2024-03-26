@@ -1,3 +1,6 @@
+# Project specific files
+allure-results
+debug
 # Logs
 logs
 *.log
