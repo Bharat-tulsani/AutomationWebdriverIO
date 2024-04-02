@@ -1,6 +1,6 @@
 Feature: Opening Demo URL in Browser
 
-    @demo
+    # @demo
     Scenario Outline:  Opening Demo URL in Browser
         Given Google Page is open
         When Search with <SearchItem>
