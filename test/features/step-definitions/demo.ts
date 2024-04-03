@@ -24,7 +24,7 @@ Then(/^Url should match (.*)$/, async function (ExpectedUrl) {
 
 // Web Interactions
 Given(/^A web page is opened$/, async function () {
-    await browser.url("https://the-internet.herokuapp.com/upload");
+    await browser.url("https://the-internet.herokuapp.com/frames");
     await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
     await browser.maximizeWindow();
 }
@@ -161,7 +161,22 @@ When(/^Perform web Interaction$/, async function () {
     //     await browser.acceptAlert();
     //     await browser.pause(5000);
     // }
-    (await $(`#file-upload`)).addValue(`${process.cwd()}/data/fileupload/Spider.jpg`);
-    await $(`#file-submit`).click();
-    await browser.debug();
+    // (await $(`#file-upload`)).addValue(`${process.cwd()}/data/fileupload/Spider.jpg`);
+    // await $(`#file-submit`).click();
+    // await browser.debug();
+
+
+    // frames 
+    await $(`=iFrame`).click();
+    let ele = await $(`#mce_0_ifr`);
+    await browser.switchToFrame(ele);
+    //Interaction with frame..
+    await $(`#tinymce`).click();
+    await browser.keys(["Meta", "A"]);
+    await browser.pause(1000);
+    await browser.keys("Delete");
+    await $(`#tinymce`).addValue(`Typing into a frame...`);
+    await browser.switchToParentFrame();
+    await browser.pause(5000);
+
 });
