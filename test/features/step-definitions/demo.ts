@@ -24,7 +24,7 @@ Then(/^Url should match (.*)$/, async function (ExpectedUrl) {
 
 // Web Interactions
 Given(/^A web page is opened$/, async function () {
-    await browser.url("https://the-internet.herokuapp.com/frames");
+    await browser.url("https://the-internet.herokuapp.com/tables");
     await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
     await browser.maximizeWindow();
 }
@@ -167,16 +167,64 @@ When(/^Perform web Interaction$/, async function () {
 
 
     // frames 
-    await $(`=iFrame`).click();
-    let ele = await $(`#mce_0_ifr`);
-    await browser.switchToFrame(ele);
-    //Interaction with frame..
-    await $(`#tinymce`).click();
-    await browser.keys(["Meta", "A"]);
-    await browser.pause(1000);
-    await browser.keys("Delete");
-    await $(`#tinymce`).addValue(`Typing into a frame...`);
-    await browser.switchToParentFrame();
-    await browser.pause(5000);
+    // await $(`=iFrame`).click();
+    // let ele = await $(`#mce_0_ifr`);
+    // await browser.switchToFrame(ele);
+    // //Interaction with frame..
+    // await $(`#tinymce`).click();
+    // await browser.keys(["Meta", "A"]);
+    // await browser.pause(1000);
+    // await browser.keys("Delete");
+    // await $(`#tinymce`).addValue(`Typing into a frame...`);
+    // await browser.switchToParentFrame();
+    // await browser.pause(5000);
+
+    //basic scrolling
+    // await browser.maximizeWindow();
+    // await $(`//div[contains(text(), 'Best Deals on Smartphones')]`).scrollIntoView();
+
+    // await browser.pause(3000);
+
+    //Web Table Interactions
+    let rowCount = await $$(`//table[@id="table1"]/tbody/tr`).length;
+    chai.expect(rowCount).to.equal(4);
+    console.log(`Row Count: ${rowCount}`);
+    let colCount = await $$(`//table[@id="table1"]/thead/tr/th`);
+    chai.expect(colCount.length).to.equal(6);
+    console.log(`Column Count: ${colCount.length}`);
+
+    // let arr = [];
+    // for (let i = 0; i < rowCount; i++) {
+    //     let personObj = {
+    //         lastname: "",
+    //         firstname: "",
+    //         email: "",
+    //         due: "",
+    //         web: "",
+    //     };
+    //     for (let j = 0; j < colCount.length; j++) {
+    //         let cellVal = await $(`//table[@id="table1"]/tbody/tr[${i + 1}]/td[${j + 1}]`).getText();
+    //         let firstname = await $(`//table[@id="table1"]/tbody/tr[${i + 1}]/td[2]`).getText();
+    //         if (firstname === "Jason") {
+    //             if (j === 0) personObj.lastname = cellVal;
+    //             if (j === 1) personObj.firstname = cellVal;
+    //             if (j === 2) personObj.email = cellVal;
+    //             if (j === 3) personObj.due = cellVal;
+    //             if (j === 4) personObj.web = cellVal;
+    //         }
+    //     }
+    //     if (personObj.firstname === "Jason") {
+    //         arr.push(personObj);
+    //     }
+    // }
+    // console.log(`Array of Person Objects: ${JSON.stringify(arr)}`);
+
+    // Get Single Column
+    let arr = [];
+    for (let i = 0; i < rowCount; i++) {
+        let cellVal = await $(`//table[@id="table1"]/tbody/tr[${i + 1}]/td[4]`).getText();
+        arr.push(cellVal);
+    }
+    console.log(`Single col values: ${arr}`);
 
 });
