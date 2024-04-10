@@ -3,6 +3,8 @@ import * as chai from 'chai';
 
 Given(/^Google Page is open$/, async function () {
     await browser.url("https://www.google.com");
+    await browser.pause(5000);
+    console.log(`>>Browser :${JSON.stringify(browser)}`);
 });
 
 When(/Search with (.*)/, async function (SearchItem) {
@@ -10,6 +12,7 @@ When(/Search with (.*)/, async function (SearchItem) {
     let ele = await $(`[name=q]`);
     await ele.setValue(SearchItem);
     await browser.keys("Enter");
+    console.log(`>>Element: ${JSON.stringify(ele)}`);
 });
 Then(/^Click on the first search result$/, async function () {
     let ele = await $(`<h3>`);
@@ -18,13 +21,16 @@ Then(/^Click on the first search result$/, async function () {
 });
 Then(/^Url should match (.*)$/, async function (ExpectedUrl) {
     console.log(`Expected Url: ${ExpectedUrl}`);
+    await browser.waitUntil(async () => {
+        return (await browser.getTitle()) === "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO";
+    }, { timeout: 10000, interval: 500, timeoutMsg: `Failed loading WDIO web page :${await browser.getTitle}` });
     let url = await browser.getUrl();
     chai.expect(url).to.equal(ExpectedUrl);
 });
 
 // Web Interactions
 Given(/^A web page is opened$/, async function () {
-    await browser.url("https://the-internet.herokuapp.com/tables");
+    await browser.url("https://www.wwe.com/");
     await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
     await browser.maximizeWindow();
 }
@@ -186,12 +192,12 @@ When(/^Perform web Interaction$/, async function () {
     // await browser.pause(3000);
 
     //Web Table Interactions
-    let rowCount = await $$(`//table[@id="table1"]/tbody/tr`).length;
-    chai.expect(rowCount).to.equal(4);
-    console.log(`Row Count: ${rowCount}`);
-    let colCount = await $$(`//table[@id="table1"]/thead/tr/th`);
-    chai.expect(colCount.length).to.equal(6);
-    console.log(`Column Count: ${colCount.length}`);
+    // let rowCount = await $$(`//table[@id="table1"]/tbody/tr`).length;
+    // chai.expect(rowCount).to.equal(4);
+    // console.log(`Row Count: ${rowCount}`);
+    // let colCount = await $$(`//table[@id="table1"]/thead/tr/th`);
+    // chai.expect(colCount.length).to.equal(6);
+    // console.log(`Column Count: ${colCount.length}`);
 
     // let arr = [];
     // for (let i = 0; i < rowCount; i++) {
@@ -220,11 +226,27 @@ When(/^Perform web Interaction$/, async function () {
     // console.log(`Array of Person Objects: ${JSON.stringify(arr)}`);
 
     // Get Single Column
-    let arr = [];
-    for (let i = 0; i < rowCount; i++) {
-        let cellVal = await $(`//table[@id="table1"]/tbody/tr[${i + 1}]/td[4]`).getText();
-        arr.push(cellVal);
-    }
-    console.log(`Single col values: ${arr}`);
+    // let arr = [];
+    // for (let i = 0; i < rowCount; i++) {
+    //     let cellVal = await $(`//table[@id="table1"]/tbody/tr[${i + 1}]/td[4]`).getText();
+    //     arr.push(cellVal);
+    // }
+    // console.log(`Single col values: ${arr}`);
 
+    await browser.execute(() => {
+        window.scrollBy(0, window.innerHeight);
+    });
+    await browser.pause(3000);
+    await browser.execute(() => {
+        window.scrollBy(0, -window.innerHeight);
+    });
+    await browser.pause(3000);
+    await browser.execute(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+    await browser.pause(3000);
+    await browser.execute(() => {
+        window.scrollTo(0, document.body.scrollTop);
+    });
+    await browser.pause(3000);
 });
