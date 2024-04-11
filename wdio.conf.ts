@@ -1,4 +1,7 @@
 import type { Options } from '@wdio/types'
+
+let headless = process.env.HEADLESS || "N";
+console.log(`>>The headless flag: ${headless}`);
 export const config: Options.Testrunner = {
     //
     // ====================
@@ -59,8 +62,16 @@ export const config: Options.Testrunner = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
+    //--disable-dev-shm-usage[20] ⊗	The /dev/shm partition is too small in certain VM environments, causing Chrome to fail or crash (see http://crbug.com/715363). Use this flag to work-around this issue (a temporary directory will always be used to create anonymous shared memory files). 
+    //--headless ⊗	Run in headless mode, i.e., without a UI or display server dependencies.
+    //--no-sandbox ⊗	Disables the sandbox for all process types that are normally sandboxed. Meant to be used as a browser-level switch for testing purposes only.
+    //--window-size ⊗	Sets the initial window size. Provided as string in the format "800,600"
+
     capabilities: [{
-        browserName: 'chrome'
+        browserName: 'chrome',
+        "goog:chromeOptions": {
+            args: headless.toUpperCase() === "Y" ? ["--headless", "--disable-dev-shm-usage", "--no-sandbox", "--window-size=1920,1080"] : []
+        }
     }],
 
     //
