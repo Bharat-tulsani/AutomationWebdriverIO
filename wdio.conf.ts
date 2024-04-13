@@ -1,7 +1,10 @@
 import type { Options } from '@wdio/types'
-
+import dotenv from 'dotenv';
+dotenv.config();
 let headless = process.env.HEADLESS || "N";
 console.log(`>>The headless flag: ${headless}`);
+let debug = process.env.DEBUG || "N";
+console.log(`>>The debug flag: ${debug}`);
 export const config: Options.Testrunner = {
     //
     // ====================
@@ -81,7 +84,7 @@ export const config: Options.Testrunner = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'error',
+    logLevel: debug.toUpperCase() === "Y" ? 'info' : 'error',
     //
     // Set specific log levels per logger
     // loggers:
@@ -228,6 +231,9 @@ export const config: Options.Testrunner = {
      * @param {object}         browser      instance of created browser/device session
      */
     // before: function (capabilities, specs) {
+    //     browser.options["environment"] = config.environment
+    //     browser.options["sauseDemoUrl"] = config.sauseDemoUrl
+
     // },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -273,8 +279,12 @@ export const config: Options.Testrunner = {
      * @param {number}             result.duration  duration of scenario in milliseconds
      * @param {object}             context          Cucumber World object
      */
-    // afterStep: function (step, scenario, result, context) {
-    // },
+    afterStep: function (step, scenario, result, context) {
+        console.log(`>>Step: ${JSON.stringify(step)}`);
+        console.log(`>>Scenario: ${JSON.stringify(scenario)}`);
+        console.log(`>>Result: ${JSON.stringify(result)}`);
+        console.log(`>>Context: ${JSON.stringify(context)}`);
+    },
     /**
      *
      * Runs after a Cucumber Scenario.

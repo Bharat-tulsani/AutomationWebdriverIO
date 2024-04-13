@@ -5,10 +5,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "wdio": "wdio run ./wdio.conf.ts",
-    "demo": "npx wdio wdio.conf.ts --cucumberOpts.tagExpression='@demo'",
-    "smoke": "set HEADLESS=Y&& npx wdio wdio.conf.ts --cucumberOpts.tagExpression='@smoke'"
+    "test:demo": "npx wdio config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo'",
+    "test:smoke": "set HEADLESS=Y&& npx wdio config/wdio.test.conf.ts --cucumberOpts.tagExpression='@smoke'",
+    "test:debug": "set DEBUG=Y&& npx wdio config/wdio.test.conf.ts --cucumberOpts.tagExpression='@debug'",
+    "uat:demo": "npx wdio config/wdio.uat.conf.ts --cucumberOpts.tagExpression='@demo'",
+    "uat:smoke": "set HEADLESS=Y&& npx wdio config/wdio.uat.conf.ts --cucumberOpts.tagExpression='@smoke'"
   },
   "repository": {
     "type": "git",
@@ -36,5 +38,8 @@
     "chai": "^5.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   }
 }

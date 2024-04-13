@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
-        "moduleResolution": "node",
+        // "moduleResolution": "node",
         "module": "ESNext", // Earlier it was "CommonJS"
         "target": "es2022",
+        "moduleResolution": "Node",
         "lib": [
             "es2022",
             "dom"
